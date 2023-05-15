@@ -18,13 +18,10 @@ jobs:
     - uses: actions/checkout@v3
     - name: Build
       run: cargo build --release --features lua51
-    - name: Upload binaries to release
-      uses: svenstaro/upload-release-action@v2
+    - name: Upload a Build Artifact
+      uses: actions/upload-artifact@v3.1.2
       with:
-        repo_token: ${{ secrets.GITHUB_TOKEN }}
-        file: target/release/libmoon-gas.so
-        asset_name: moon-gas
-        tag: ${{ github.ref }}
-        overwrite: true
-        body: "linux build"
-    
+        # Artifact name
+        name: libmoon-gas.so
+        # A file, directory or wildcard pattern that describes what to upload
+        path: target/release/
