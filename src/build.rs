@@ -1,25 +1,23 @@
-use colored::Colorize;
-use std::process::Command;
+use std::{
+    path::Path,
+    process::{Command, Output},
+};
 
+struct Compiler(&'static str);
+impl Compiler {
+    pub fn compile(&self, file: impl AsRef<Path>) -> std::io::Result<Output> {
+        Command::new(self.0).arg("-c").arg(file.as_ref()).arg("-I/usr/include/lua5.1").output()
+    }
+}
 
+const COMPILER: Compiler = Compiler("cc");
 
-pub fn build(path: String, output: String){
-    let  _stage1 = String::from("Compilling ");
-    let _status = 0;
-    let _check = false;
-    let _step = 0;
+pub fn build(path: String, output: String) {
     if cfg!(unix) {
         for file in path.split(',') {
-        let _ = Command::new("cc").arg("-c").arg(file).arg("-I/usr/include/lua5.1").arg("-llua5.1").output().expect("Failed to execute command");
-            println!("{} {}", "compiled ".blue().bold(), file);
-      }
-
-        let mut compile =  Command::new("cc");
-        for name in output.split(','){
-            compile.arg(name);
+            if COMPILER.compile(&file).is_ok() {
+                println!("{} {}", "compiled ",file);
+            }
         }
-        let _ = compile.arg("-shared").arg("-o").arg("power.so").spawn();
-            println!("{} ", "Success".blue().bold());
-
     }
 }

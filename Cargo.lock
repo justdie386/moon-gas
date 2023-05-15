@@ -527,6 +527,7 @@ dependencies = [
  "colored",
  "env",
  "flate2",
+ "lazy_static",
  "mlua",
  "reqwest",
  "tar",
