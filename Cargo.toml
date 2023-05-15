@@ -1,0 +1,21 @@
+[package]
+name = "moon-gas"
+version = "0.0.0"
+edition = "2021"
+
+[lib]
+crate-type = ["cdylib"]
+
+[features]
+lua51 = ["mlua/lua51"]
+
+[dependencies]
+colored = "2.0.0"
+env = "0.0.0"
+flate2 = "1.0.26"
+mlua = {version = "0.8.8", features = ["module", "serialize"]}
+reqwest = "0.11.17"
+tar = "0.4.38"
+thread = "0.1.0"
+time = "0.3.21"
+tokio = { version = "1", features = ["rt-multi-thread", "macros"] }
