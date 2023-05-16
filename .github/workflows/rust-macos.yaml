@@ -17,7 +17,7 @@ jobs:
     steps:
     - uses: actions/checkout@v3
     - name: Build
-      run: cargo build --release --features lua51
+      run: cargo +nightly build --release --features lua51
     - name: Upload a Build Artifact
       uses: actions/upload-artifact@v3.1.2
       with:
