@@ -1,23 +1,78 @@
-use std::{
-    path::Path,
-    process::{Command, Output},
-};
+use colored::Colorize;
+use std::process::Command;
+use std::thread::sleep;
+use std::time::Duration;
 
-struct Compiler(&'static str);
-impl Compiler {
-    pub fn compile(&self, file: impl AsRef<Path>) -> std::io::Result<Output> {
-        Command::new(self.0).arg("-c").arg(file.as_ref()).arg("-I/usr/include/lua5.1").output()
-    }
-}
+pub fn build(path: String, output: String, flag: String) {
+    let mut rm = Command::new("rm");
+    let mut compile = Command::new("cc");
+    let mut ocompile: Command = Command::new("cc");
+    if flag.is_empty() != true {
+        for args in flag.split(' ') {
+            compile.arg(args);
+            ocompile.arg(args);
 
-const COMPILER: Compiler = Compiler("cc");
-
-pub fn build(path: String, output: String) {
-    if cfg!(unix) {
-        for file in path.split(',') {
-            if COMPILER.compile(&file).is_ok() {
-                println!("{} {}", "compiled ",file);
-            }
         }
+    }
+    if cfg!(unix) {
+                for file in path.split(',') {
+            if flag.is_empty() != true {
+                for args in flag.split(' ') {
+                    ocompile.arg(args);
+                }
+            }
+            ocompile
+                .arg("-c")
+                .arg(file)
+                .arg("-I/usr/include/lua5.1")
+                .arg("-llua5.1")
+                .output()
+                .expect("Failed to execute command");
+            println!("{} {}", "compiled ".blue().bold(), file);
+                let parts: Vec<&str> = file.split('/').collect();
+                if let Some(name) = parts.last() {
+                    let mut fullname = String::from(file);
+                    if fullname.contains(".h") {
+                        fullname.push('.');
+                        fullname.push('g');
+                        fullname.push('c');
+                        fullname.push('h');
+                    rm.arg(fullname);
+                    } else {
+                        let mut fullname = String::from(*name);
+                        fullname.truncate(name.len() - 1);
+                        fullname.push('o');
+                        compile.arg(file);
+                        rm.arg(fullname); 
+                    }
+                }
+            }
+        sleep(Duration::from_millis(600));
+        let _ = rm.spawn();
+        let _ = compile
+            .arg("-shared")
+            .arg("-o")
+            .arg(output.clone())
+            .arg("-I/usr/include/lua5.1")
+            .spawn();
+        
+        println!("{} ", "Success".blue().bold());
+        sleep(Duration::from_millis(200));
+        if let Some(folder) = output.find('/') {
+            let file = &output[..folder];
+            let _ = Command::new("cp")
+            .arg("-r")
+            .arg(file)
+            .arg("/usr/share/lua/5.1/")
+            .spawn();
+        } else {
+            let _ = Command::new("cp")
+            .arg("-r")
+            .arg(output.clone())
+            .arg("/usr/share/lua/5.1/")
+            .spawn(); 
+        }
+
+        println!("{}", "Installed to lua".blue().bold());
     }
 }

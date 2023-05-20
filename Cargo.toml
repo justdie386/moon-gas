@@ -4,6 +4,7 @@ version = "0.0.0"
 edition = "2021"
 
 [lib]
+name = "moongas"
 crate-type = ["cdylib"]
 
 [features]
@@ -16,6 +17,7 @@ flate2 = "1.0.26"
 lazy_static = "1.4.0"
 mlua = {version = "0.8.8", features = ["module", "serialize"]}
 reqwest = "0.11.17"
+sleep = "1.0.1"
 tar = "0.4.38"
 thread = "0.1.0"
 time = "0.3.21"

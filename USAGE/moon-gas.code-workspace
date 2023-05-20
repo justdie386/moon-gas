@@ -1,0 +1,17 @@
+{
+	"folders": [
+		{
+			"path": ".."
+		},
+		{
+			"path": "../../showcase"
+		}
+	],
+	"settings": {
+		"rust-analyzer.linkedProjects": [
+			"./Cargo.toml",
+			"./Cargo.toml",
+			"./Cargo.toml"
+		]
+	}
+}
