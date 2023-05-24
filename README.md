@@ -10,6 +10,8 @@ How to use
 
 Run cargo build --release --features *the lua version you want to use*
 
+Has support for lua version from 5.1 to 5.4 and also for luajit
+but i only tested 5.1 and 5.4
 
 to build on macos, if you get an error related to cc, add this to ~/.cargo/config, this fixed it for me
 
