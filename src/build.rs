@@ -18,7 +18,7 @@ pub fn build(path: String, output: String, flag: String) {
     println!("Version: {}", *read_lock);
     let lua_link = String::from("-I/usr/include/");
     let lua_link = lua_link + &*read_lock;
-    let lua_link2 = String::from("-l");
+    let lua_link2 = String::from("-llua");
     let lua_link2 = lua_link2 + &*read_lock;
     let lua_location = String::from("/usr/share/lua/");
     let lua_location = lua_location + &*read_lock;
@@ -77,16 +77,16 @@ pub fn build(path: String, output: String, flag: String) {
             let _ = Command::new("cp")
             .arg("-r")
             .arg(file)
-            .arg(lua_location)
+            .arg(lua_location.clone())
             .spawn();
         } else {
             let _ = Command::new("cp")
             .arg("-r")
             .arg(output.clone())
-            .arg(lua_location)
+            .arg(lua_location.clone())
             .spawn(); 
         }
 
-        println!("{}", "Installed to lua".blue().bold());
+        println!("{} {}", "Installed to lua at".blue().bold(), lua_location.clone().blue());
     }
 }
