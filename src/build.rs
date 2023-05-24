@@ -1,9 +1,21 @@
 use colored::Colorize;
 use std::process::Command;
 use std::thread::sleep;
+use lazy_static::lazy_static;
 use std::time::Duration;
+use std::sync::RwLock;
 
+lazy_static! {
+    static ref VERSION: RwLock<String> = RwLock::new(String::new());
+}
+
+pub fn setVersion(version: String) {
+    let mut write_lock = VERSION.write().unwrap();
+    *write_lock = version;
+}
 pub fn build(path: String, output: String, flag: String) {
+    let read_lock = VERSION.read().unwrap();
+    println!("Version: {}", *read_lock);
     let mut rm = Command::new("rm");
     let mut compile = Command::new("cc");
     let mut ocompile: Command = Command::new("cc");
@@ -16,11 +28,6 @@ pub fn build(path: String, output: String, flag: String) {
     }
     if cfg!(unix) {
                 for file in path.split(',') {
-            if flag.is_empty() != true {
-                for args in flag.split(' ') {
-                    ocompile.arg(args);
-                }
-            }
             ocompile
                 .arg("-c")
                 .arg(file)

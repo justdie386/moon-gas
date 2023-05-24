@@ -14,10 +14,13 @@ lua51 = ["mlua/lua51"]
 colored = "2.0.0"
 env = "0.0.0"
 flate2 = "1.0.26"
+git2 = "0.17.1"
 lazy_static = "1.4.0"
+lock_api = "0.4.9"
 mlua = {version = "0.8.8", features = ["module", "serialize"]}
 reqwest = "0.11.17"
 sleep = "1.0.1"
+sync = "0.1.0"
 tar = "0.4.38"
 thread = "0.1.0"
 time = "0.3.21"
