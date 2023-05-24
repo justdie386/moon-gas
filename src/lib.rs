@@ -12,10 +12,10 @@ fn build(_: &Lua, (path, output, flag): (String, String, String)) -> LuaResult<b
 }
 fn version(_: &Lua, version: String) -> LuaResult<bool>{
     println!("{}", version);
-    build::setVersion(version);
+    build::set_version(version);
     Ok(true)
 }
-fn clone(_: &Lua, version: String) -> LuaResult<bool>{
+fn clone(_: &Lua, _version: String) -> LuaResult<bool>{
 
     Ok(true)
 }

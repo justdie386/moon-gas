@@ -8,7 +8,7 @@ The code is pretty weird, i'll have to rework on the logic, but its still pretty
 
 How to use
 
-Run cargo build --release --features lua51
+Run cargo build --release --features *the lua version you want to use*
 
 
 to build on macos, if you get an error related to cc, add this to ~/.cargo/config, this fixed it for me

@@ -9,13 +9,19 @@ lazy_static! {
     static ref VERSION: RwLock<String> = RwLock::new(String::new());
 }
 
-pub fn setVersion(version: String) {
+pub fn set_version(version: String) {
     let mut write_lock = VERSION.write().unwrap();
     *write_lock = version;
 }
 pub fn build(path: String, output: String, flag: String) {
     let read_lock = VERSION.read().unwrap();
     println!("Version: {}", *read_lock);
+    let lua_link = String::from("-I/usr/include/");
+    let lua_link = lua_link + &*read_lock;
+    let lua_link2 = String::from("-l");
+    let lua_link2 = lua_link2 + &*read_lock;
+    let lua_location = String::from("/usr/share/lua/");
+    let lua_location = lua_location + &*read_lock;
     let mut rm = Command::new("rm");
     let mut compile = Command::new("cc");
     let mut ocompile: Command = Command::new("cc");
@@ -31,8 +37,8 @@ pub fn build(path: String, output: String, flag: String) {
             ocompile
                 .arg("-c")
                 .arg(file)
-                .arg("-I/usr/include/lua5.1")
-                .arg("-llua5.1")
+                .arg(lua_link.clone())
+                .arg(lua_link2.clone())
                 .output()
                 .expect("Failed to execute command");
             println!("{} {}", "compiled ".blue().bold(), file);
@@ -58,9 +64,10 @@ pub fn build(path: String, output: String, flag: String) {
         let _ = rm.spawn();
         let _ = compile
             .arg("-shared")
+            .arg(lua_link2.clone())
             .arg("-o")
             .arg(output.clone())
-            .arg("-I/usr/include/lua5.1")
+            .arg(lua_link.clone())
             .spawn();
         
         println!("{} ", "Success".blue().bold());
@@ -70,13 +77,13 @@ pub fn build(path: String, output: String, flag: String) {
             let _ = Command::new("cp")
             .arg("-r")
             .arg(file)
-            .arg("/usr/share/lua/5.1/")
+            .arg(lua_location)
             .spawn();
         } else {
             let _ = Command::new("cp")
             .arg("-r")
             .arg(output.clone())
-            .arg("/usr/share/lua/5.1/")
+            .arg(lua_location)
             .spawn(); 
         }
 

@@ -1,6 +1,6 @@
-use git2::Repository;
+
 use std::env;
-pub fn clone(repo: String){
-    let dir = env::current_dir().unwrap();
+pub fn clone(_repo: String){
+    let _dir = env::current_dir().unwrap();
     
 }

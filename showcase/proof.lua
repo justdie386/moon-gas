@@ -1,3 +1,3 @@
 local fellas = require"showcase"
 
-fellas.nice()
+fellas.greet("nice")

@@ -9,6 +9,7 @@ crate-type = ["cdylib"]
 
 [features]
 lua51 = ["mlua/lua51"]
+lua54 = ["mlua/lua54"]
 
 [dependencies]
 colored = "2.0.0"
