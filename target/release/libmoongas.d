@@ -1,1 +1,0 @@
-/home/justdie/Desktop/rust/moon-gas/target/release/libmoongas.so: /home/justdie/Desktop/rust/moon-gas/src/build.rs /home/justdie/Desktop/rust/moon-gas/src/fetch.rs /home/justdie/Desktop/rust/moon-gas/src/lib.rs /home/justdie/Desktop/rust/moon-gas/src/utils.rs
