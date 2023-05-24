@@ -15,7 +15,8 @@ but i only tested 5.1 and 5.4
 
 to build on macos, if you get an error related to cc, add this to ~/.cargo/config, this fixed it for me
 
-
+For intel
+```
 [target.x86_64-apple-darwin]
 
 rustflags = [
@@ -25,7 +26,9 @@ rustflags = [
   "-C", "link-arg=dynamic_lookup",
   
 ]
-
+```
+For m1-m2
+```
 [target.aarch64-apple-darwin]
 
 rustflags = [
@@ -35,3 +38,4 @@ rustflags = [
   "-C", "link-arg=dynamic_lookup",
   
 ]
+```
