@@ -1,3 +1,4 @@
-local fellas = require"showcase"
+package.cpath = "./?.so"
+local fellas = require"power"
 
-fellas.nice()
+fellas.greet("nice")

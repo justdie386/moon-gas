@@ -1,25 +1,20 @@
-
-// make a lua to c api example that creates a function and print cool, for lua5.1
+// example of the lua c api for lua54
 
 #include <lua.h>
 #include <lauxlib.h>
-#include <lualib.h>
-#include "other.h"
 
-static int l_cool(lua_State *L)
-{
-    test();
-    printf("cool\n");
-    return 0;
+static int greet(lua_State* L) {
+    const char* name = luaL_checkstring(L, 1);  // Get the argument from Lua stack
+    printf("Hello, %s!\n", name);
+    return 0;  // Number of return values
 }
 
-static const struct luaL_reg mylib [] = {
-    {"cool", l_cool},
-    {NULL, NULL}
+static const luaL_Reg mylib[] = {
+    {"greet", greet},
+    {NULL, NULL}  // Sentinel
 };
 
-int luaopen_power(lua_State *L)
-{
-    luaL_openlib(L, "mylib", mylib, 0);
-    return 1;
+int luaopen_power(lua_State* L) {
+    luaL_newlib(L, mylib);  // Create the module table
+    return 1;  // Number of return values
 }
